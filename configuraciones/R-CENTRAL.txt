@@ -1,0 +1,32 @@
+hostname R-CENTRAL
+no ip domain-lookup
+interface Serial0/0/0
+ description Enlace a R-OSPF-1
+ ip address 10.0.0.6 255.255.255.252
+ no shutdown
+interface Serial0/0/1
+ description Enlace a R-OSPF-2
+ ip address 10.0.0.10 255.255.255.252
+ no shutdown
+interface Serial0/1/0
+ description Enlace a R-EIGRP-1
+ ip address 10.0.0.14 255.255.255.252
+ ip summary-address eigrp 100 192.168.0.0 255.255.254.0
+ no shutdown
+interface Serial0/1/1
+ description Enlace a R-EIGRP-2
+ ip address 10.0.0.18 255.255.255.252
+ ip summary-address eigrp 100 192.168.0.0 255.255.254.0
+ no shutdown
+ip route 172.16.0.0 255.255.255.0 Null0
+router ospf 1
+ router-id 3.3.3.3
+ network 10.0.0.4 0.0.0.3 area 0
+ network 10.0.0.8 0.0.0.3 area 0
+ redistribute static metric-type 1 subnets
+router eigrp 100
+ network 10.0.0.12 0.0.0.3
+ network 10.0.0.16 0.0.0.3
+ redistribute ospf 1 metric 1544 2000 255 1 1500
+ no auto-summary
+end

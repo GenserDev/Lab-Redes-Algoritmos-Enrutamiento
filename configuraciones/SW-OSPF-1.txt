@@ -1,0 +1,17 @@
+hostname SW-OSPF-1
+vlan 10
+ name DATOS
+vlan 30
+ name ADMINISTRACION
+interface FastEthernet0/1
+ description PC VLAN 10
+ switchport mode access
+ switchport access vlan 10
+interface FastEthernet0/2
+ description PC VLAN 30
+ switchport mode access
+ switchport access vlan 30
+interface GigabitEthernet0/1
+ description Troncal hacia R-OSPF-1
+ switchport mode trunk
+end

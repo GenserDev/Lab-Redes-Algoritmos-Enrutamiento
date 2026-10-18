@@ -1,0 +1,23 @@
+hostname R-OSPF-2
+no ip domain-lookup
+interface GigabitEthernet0/0
+ description LAN Datos usuarios
+ ip address 192.168.0.1 255.255.255.0
+ no shutdown
+interface Serial0/0/0
+ description Enlace directo a R-OSPF-1
+ ip address 10.0.0.2 255.255.255.252
+ ip ospf cost 128
+ no shutdown
+interface Serial0/0/1
+ description Enlace a R-CENTRAL
+ ip address 10.0.0.9 255.255.255.252
+ clock rate 64000
+ no shutdown
+router ospf 1
+ router-id 2.2.2.2
+ network 192.168.0.0 0.0.0.255 area 0
+ network 10.0.0.0 0.0.0.3 area 0
+ network 10.0.0.8 0.0.0.3 area 0
+ passive-interface GigabitEthernet0/0
+end

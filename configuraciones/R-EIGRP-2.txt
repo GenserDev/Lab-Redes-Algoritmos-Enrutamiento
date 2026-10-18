@@ -1,0 +1,25 @@
+hostname R-EIGRP-2
+no ip domain-lookup
+interface GigabitEthernet0/0
+ description LAN Datos usuarios
+ ip address 172.16.0.1 255.255.255.128
+ no shutdown
+interface Serial0/0/0
+ description Enlace directo a R-EIGRP-1 ruta principal
+ ip address 10.0.0.22 255.255.255.252
+ delay 2100
+ no shutdown
+interface Serial0/0/1
+ description Enlace a R-CENTRAL ruta secundaria
+ ip address 10.0.0.17 255.255.255.252
+ delay 17250
+ clock rate 64000
+ no shutdown
+router eigrp 100
+ network 172.16.0.0 0.0.0.127
+ network 10.0.0.16 0.0.0.3
+ network 10.0.0.20 0.0.0.3
+ passive-interface GigabitEthernet0/0
+ variance 3
+ no auto-summary
+end
