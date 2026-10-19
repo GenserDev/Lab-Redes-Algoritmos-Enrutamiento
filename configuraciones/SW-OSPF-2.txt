@@ -1,6 +1,0 @@
-hostname SW-OSPF-2
-interface FastEthernet0/1
- description PC LAN Datos
-interface GigabitEthernet0/1
- description Enlace hacia R-OSPF-2
-end
